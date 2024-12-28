@@ -95,3 +95,7 @@ Hjem Rum is certainly in need of contribution. WIP Section
 ## Credits
 
 Credit goes to [@NotAShelf](https://github.com/NotAShelf) and [@éclairevoyant](https://github.com/eclairevoyant) for creating Hjem.
+
+## License
+
+All the code within this repository is protected under the GPLv3 license unless explicitly stated otherwise within a file. Please see [LICENSE](LICENSE) for more information.
