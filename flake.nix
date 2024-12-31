@@ -1,6 +1,6 @@
 {
-  description = "A module collection for hjem.";
-  
+  description = "A module collection for Hjem";
+
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
@@ -12,12 +12,17 @@
 
   outputs = {
     self,
-    #nixpkgs,
+    nixpkgs,
     ...
-  }: {
+  }: let
+    forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
+  in {
     nixosModules = {
-      hjem-rum = import ./modules/nixos.nix;
+      hjem-rum = ./modules/nixos.nix;
       default = self.nixosModules.hjem-rum;
     };
+
+    # Provide the default formatter to invoke on 'nix fmt'.
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
   };
 }
