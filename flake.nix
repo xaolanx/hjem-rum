@@ -1,5 +1,5 @@
 {
-  description = "A module collection for hjem.";
+  description = "A module collection for Hjem";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
