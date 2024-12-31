@@ -4,9 +4,9 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
-  inherit (lib.options) mkOption literalExpression;
-  inherit (lib.types) package attrs;
+  inherit (lib.modules) mkIf;
+  inherit (lib.options) mkOption mkEnableOption mkPackageOption;
+  inherit (lib.types) attrsOf anything;
 
   toTOML = (pkgs.formats.toml {}).generate;
 
@@ -15,27 +15,25 @@ in {
   options.rum.programs.alacritty = {
     enable = mkEnableOption "Alacritty";
 
-    package = mkOption {
-      type = package;
-      default = pkgs.alacritty;
-      description = "The nix package to be installed.";
-    };
+    package = mkPackageOption pkgs "alacritty" {};
 
     settings = mkOption {
-      type = attrs;
+      type = attrsOf anything;
       default = {};
-      example = literalExpression ''
+      example = {
         window = {
           dimensions = {
             lines = 28;
             columns = 101;
           };
+
           padding = {
             x = 6;
             y = 3;
           };
         };
-      '';
+      };
+
       description = ''
         The configuration converted into TOML and written to
         `${config.directory}/.config/alacritty/alacritty.toml`.
@@ -46,7 +44,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [ cfg.package ];
+    packages = [cfg.package];
     files.".config/alacritty/alacritty.toml".source = toTOML "alacritty.toml" cfg.settings;
   };
 }
