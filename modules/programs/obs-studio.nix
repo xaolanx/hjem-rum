@@ -32,7 +32,7 @@ in {
 
   config = mkIf cfg.enable {
     packages = [
-      (pkgs.wrapOBS.override { obs-studio = cfg.package; } {
+      (pkgs.wrapOBS.override {obs-studio = cfg.package;} {
         plugins = cfg.plugins;
       })
     ];
