@@ -3,6 +3,7 @@
   imports = [
     ./alacritty.nix
     ./obs-studio.nix
+    ./spotify-player.nix
     ./vscode.nix
   ];
 }
