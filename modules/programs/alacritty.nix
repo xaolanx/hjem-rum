@@ -6,9 +6,8 @@
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
-  inherit (lib.types) attrsOf anything;
 
-  toTOML = (pkgs.formats.toml {}).generate;
+  toml = pkgs.formats.toml {};
 
   cfg = config.rum.programs.alacritty;
 in {
@@ -18,7 +17,7 @@ in {
     package = mkPackageOption pkgs "alacritty" {};
 
     settings = mkOption {
-      type = attrsOf anything;
+      type = toml.type;
       default = {};
       example = {
         window = {
@@ -45,6 +44,6 @@ in {
 
   config = mkIf cfg.enable {
     packages = [cfg.package];
-    files.".config/alacritty/alacritty.toml".source = toTOML "alacritty.toml" cfg.settings;
+    files.".config/alacritty/alacritty.toml".source = toml.generate "alacritty.toml" cfg.settings;
   };
 }
