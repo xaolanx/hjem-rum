@@ -1,0 +1,5 @@
+{lib}: {
+  # generatorName = {...}: {
+  #   function
+  # };
+}
