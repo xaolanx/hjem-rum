@@ -18,7 +18,7 @@
     forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
   in {
     nixosModules = {
-      hjem-rum = ./modules/nixos.nix;
+      hjem-rum = import ./modules/nixos.nix {inherit (nixpkgs) lib;};
       default = self.nixosModules.hjem-rum;
     };
 
