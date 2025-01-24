@@ -19,11 +19,11 @@
     extendedLib = nixpkgs.lib.extend (final: prev: import ./modules/lib/default.nix {lib = prev;});
   in {
     nixosModules = {
-      hjem-rum = import ./modules/nixos.nix {inherit (nixpkgs) lib;};
+      hjem-rum = import ./modules/nixos.nix {lib = extendedLib;};
       default = self.nixosModules.hjem-rum;
     };
 
-    specialArgs = {lib = extendedLib;};
+    lib = extendedLib;
 
     # Provide the default formatter to invoke on 'nix fmt'.
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
