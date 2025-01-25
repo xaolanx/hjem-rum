@@ -6,7 +6,6 @@
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
-  inherit (lib.types) attrsOf either int str lines;
 
   cfg = config.rum.programs.lsd;
   toYAML = pkgs.formats.yaml {};
@@ -21,9 +20,9 @@ in {
       default = {};
       example = {
         classic = false;
-	color = {
-	  theme = "default";
-	};
+        color = {
+          theme = "default";
+        };
       };
 
       description = ''
