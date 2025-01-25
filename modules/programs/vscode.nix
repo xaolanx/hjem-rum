@@ -38,7 +38,9 @@ in {
   config = mkIf cfg.enable {
     packages = [cfg.package];
     files = {
-      ".config/Code/User/settings.json".text = toJSON cfg.settings;
+      ".config/Code/User/settings.json".text = mkIf (cfg.settings != {}) (
+        toJSON cfg.settings
+      );
     };
   };
 }

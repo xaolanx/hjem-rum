@@ -116,9 +116,18 @@ in {
   config = mkIf cfg.enable {
     packages = [cfg.package];
     files = {
-      ".config/spotify-player/app.toml".source = toml.generate "spotify-player/app.toml" cfg.settings;
-      ".config/spotify-player/theme.toml".source = toml.generate "spotify-player/theme.toml" {inherit (cfg) themes;}; # Passes each declared theme under the "themes" attr as needed
-      ".config/spotify-player/keymap.toml".source = toml.generate "spotify-player/keymap.toml" cfg.keymap;
+      ".config/spotify-player/app.toml".source = mkIf (cfg.settings != {}) (
+        toml.generate "spotify-player/app.toml" cfg.settings
+      );
+
+      # Passes each declared theme under the "themes" attr as needed
+      ".config/spotify-player/theme.toml".source = mkIf (cfg.themes != []) (
+        toml.generate "spotify-player/theme.toml" {inherit (cfg) themes;}
+      );
+
+      ".config/spotify-player/keymap.toml".source = mkIf (cfg.keymap != {}) (
+        toml.generate "spotify-player/keymap.toml" cfg.keymap
+      );
     };
   };
 }
