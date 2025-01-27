@@ -6,7 +6,7 @@ in {
     # This allows the definition of rum modules under `hjem.users.<username>.rum`
     hjem.extraModules = [
       {
-        imports = listFilesRecursive ./programs;
+        imports = listFilesRecursive ./collection;
       }
     ];
   };
