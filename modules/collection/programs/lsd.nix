@@ -68,8 +68,8 @@ in {
 
   config = mkIf cfg.enable {
     packages = [cfg.package];
-    files.".config/lsd/config.yaml".source = lib.mkIf (cfg.settings != {}) ( yaml.generate "config.yaml" cfg.settings );
-    files.".config/lsd/icons.yaml".source = lib.mkIf (cfg.icons != {}) ( yaml.generate "icons.yaml" cfg.icons );
-    files.".config/lsd/colors.yaml".source = lib.mkIf (cfg.colors != {}) ( yaml.generate "colors.yaml" cfg.colors );
+    files.".config/lsd/config.yaml".source = mkIf (cfg.settings != {}) ( yaml.generate "config.yaml" cfg.settings );
+    files.".config/lsd/icons.yaml".source = mkIf (cfg.icons != {}) ( yaml.generate "icons.yaml" cfg.icons );
+    files.".config/lsd/colors.yaml".source = mkIf (cfg.colors != {}) ( yaml.generate "colors.yaml" cfg.colors );
   };
 }
