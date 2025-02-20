@@ -6,17 +6,13 @@
     inherit (lib.attrsets) mapAttrsToList;
     inherit (lib.trivial) boolToString;
     inherit (lib.generators) toINI;
-    inherit (lib.types) attrsOf oneOf bool int float str;
   in {
-    gtkType = attrsOf (oneOf [
-      bool
-      int
-      float
-      str
-    ]);
     toGtk2Text = let
       formatGtk2 = n: v: let
-        n' = "gtk-" + n;
+        n' =
+          if hasPrefix "gtk-" n
+          then n
+          else "gtk-" + n;
         v' =
           if isBool v
           then boolToString v
@@ -32,7 +28,10 @@
     toGtkINI = attrs:
       toINI {
         mkKeyValue = n: v: let
-          n' = "gtk-" + n;
+          n' =
+            if hasPrefix "gtk-" n
+            then n
+            else "gtk-" + n;
           v' =
             if isBool v
             then boolToString v

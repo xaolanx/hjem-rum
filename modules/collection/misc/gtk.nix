@@ -7,11 +7,18 @@
   inherit (lib.options) mkOption mkEnableOption;
   inherit (lib.types) listOf package lines;
   inherit (lib.modules) mkIf;
-  inherit (lib.rum.generators.gtk) toGtk2Text gtkType toGtkINI;
+  inherit (lib.rum.generators.gtk) toGtk2Text toGtkINI;
   inherit (lib.strings) hasPrefix;
-  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.lists) optionals any;
+  inherit (lib.types) attrsOf oneOf bool int float str;
+  inherit (builtins) attrNames;
 
+  gtkType = attrsOf (oneOf [
+    bool
+    int
+    float
+    str
+  ]);
   cfg = config.rum.gtk;
 in {
   options.rum.gtk = {
@@ -73,11 +80,14 @@ in {
     };
   };
   config = mkIf cfg.enable {
+    # We could also just automatically fix it, but for now, simply
+    # check if the user accidentally included a 'gtk-' prefix.
     warnings = let
-      attrsHasPrefix = prefix: attrs: (any (hasPrefix prefix) (mapAttrsToList (n: _: n) attrs));
-    in (optionals (attrsHasPrefix "gtk-" cfg.settings) [
-      "You have prefixed 'gtk-' to an option in 'rum.gtk.settings'. This prefix is automatically included, and you should remove it from your declaration."
-    ]);
+      attrsHasPrefix = prefix: attrs: (any (hasPrefix prefix) (attrNames attrs));
+    in
+      optionals (attrsHasPrefix "gtk-" cfg.settings) [
+        "Each option in 'rum.gtk.settings' is automatically prefixed with 'gtk-' if it is not present already. You have added this to an option unnecessarily."
+      ];
 
     inherit (cfg) packages;
 
