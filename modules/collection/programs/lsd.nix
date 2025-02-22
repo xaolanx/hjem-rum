@@ -7,11 +7,12 @@
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
 
-  cfg = config.rum.programs.lsd;
   yaml = pkgs.formats.yaml {};
+
+  cfg = config.rum.programs.lsd;
 in {
   options.rum.programs.lsd = {
-    enable = mkEnableOption "lsd";
+    enable = mkEnableOption "LSD (LSDeluxe)";
 
     package = mkPackageOption pkgs "lsd" {};
 
@@ -24,7 +25,6 @@ in {
           theme = "default";
         };
       };
-
       description = ''
         Configuration written to `${config.directory}/.config/lsd/config.yaml`, defining lsd settings.
         Please reference https://github.com/lsd-rs/lsd#config-file-content to configure it accordingly.
@@ -41,10 +41,10 @@ in {
           pipe = "📩";
         };
       };
-
       description = ''
         Configuration written to `${config.directory}/.config/lsd/icons.yaml`, defining the icons used by
-        lsd. Please reference https://github.com/lsd-rs/lsd#icon-theme to configure it accordingly.
+        lsd.
+        Please reference https://github.com/lsd-rs/lsd#icon-theme to configure it accordingly.
       '';
     };
 
@@ -61,15 +61,22 @@ in {
       };
       description = ''
         Configuration written to `${config.directory}/.config/lsd/colors.yaml`, defining the colors used by
-        lsd. Please reference https://github.com/lsd-rs/lsd#color-theme-file-content to configure it accordingly.
+        lsd.
+        Please reference https://github.com/lsd-rs/lsd#color-theme-file-content to configure it accordingly.
       '';
     };
   };
 
   config = mkIf cfg.enable {
     packages = [cfg.package];
-    files.".config/lsd/config.yaml".source = mkIf (cfg.settings != {}) ( yaml.generate "config.yaml" cfg.settings );
-    files.".config/lsd/icons.yaml".source = mkIf (cfg.icons != {}) ( yaml.generate "icons.yaml" cfg.icons );
-    files.".config/lsd/colors.yaml".source = mkIf (cfg.colors != {}) ( yaml.generate "colors.yaml" cfg.colors );
+    files.".config/lsd/config.yaml".source = mkIf (cfg.settings != {}) (
+      yaml.generate "config.yaml" cfg.settings
+    );
+    files.".config/lsd/icons.yaml".source = mkIf (cfg.icons != {}) (
+      yaml.generate "icons.yaml" cfg.icons
+    );
+    files.".config/lsd/colors.yaml".source = mkIf (cfg.colors != {}) (
+      yaml.generate "colors.yaml" cfg.colors
+    );
   };
 }

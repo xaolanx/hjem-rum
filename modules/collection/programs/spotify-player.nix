@@ -13,7 +13,7 @@
   cfg = config.rum.programs.spotify-player;
 in {
   options.rum.programs.spotify-player = {
-    enable = mkEnableOption "spotify-player";
+    enable = mkEnableOption "spotify_player";
 
     package = mkPackageOption pkgs "spotify-player" {};
 
@@ -29,10 +29,10 @@ in {
           normalization = true;
         };
       };
-
       description = ''
         The configuration converted into TOML and written to
         `${config.directory}/.config/spotify-player/app.toml`.
+
         Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#general
         for config options.
       '';
@@ -81,6 +81,7 @@ in {
       description = ''
         The theme converted into TOML and written to
         `${config.directory}/.config/spotify-player/themes.toml`.
+
         Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#themes
         for config options.
       '';
@@ -107,6 +108,7 @@ in {
         Sets of keymaps and actions converted into TOML and written to
         `${config.directory}/.config/spotify-player/keymap.toml`.
         See example for how to format declarations.
+
         Please reference https://github.com/aome510/spotify-player/blob/master/docs/config.md#keymaps
         for more information.
       '';

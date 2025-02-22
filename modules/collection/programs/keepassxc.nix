@@ -8,6 +8,7 @@
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
 
   ini = pkgs.formats.ini {};
+
   cfg = config.rum.programs.keepassxc;
 in {
   options.rum.programs.keepassxc = {
