@@ -1,4 +1,4 @@
-{lib}: let
+{lib}: {config, ...}: let
   inherit (lib.filesystem) listFilesRecursive;
 in {
   config = {
@@ -10,7 +10,10 @@ in {
           imports = listFilesRecursive ./collection;
         }
       ];
-      specialArgs = {inherit lib;};
+      specialArgs = {
+        inherit lib;
+        osConfig = config;
+      };
     };
   };
 }
