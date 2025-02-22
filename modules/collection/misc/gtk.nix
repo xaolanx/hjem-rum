@@ -11,7 +11,8 @@
   inherit (lib.strings) hasPrefix;
   inherit (lib.lists) optionals any;
   inherit (lib.types) attrsOf oneOf bool int float str;
-  inherit (builtins) attrNames;
+  inherit (lib.attrsets) optionalAttrs;
+  inherit (builtins) attrNames hasAttr;
 
   gtkType = attrsOf (oneOf [
     bool
@@ -91,22 +92,23 @@ in {
 
     inherit (cfg) packages;
 
-    files = mkIf (cfg.settings != {}) {
-      ".config/.gtkrc-2.0".text = toGtk2Text {inherit (cfg) settings;};
-      ".config/gtk-3.0/settings.ini".text = toGtkINI {
-        Settings = cfg.settings;
-      };
-      ".config/gtk-4.0/settings.ini".text = toGtkINI {
-        Settings = cfg.settings;
-      };
-      ".config/gtk-3.0/gtk.css".text = mkIf (cfg.css.gtk3 != "") cfg.css.gtk3;
-      ".config/gtk-4.0/gtk.css".text = mkIf (cfg.css.gtk4 != "") cfg.css.gtk4;
-    };
+    files = (
+      optionalAttrs (cfg.settings != {}) {
+        ".gtkrc-2.0".text = toGtk2Text { inherit (cfg) settings; };
+        ".config/gtk-3.0/settings.ini".text = toGtkINI { Settings = cfg.settings; };
+        ".config/gtk-4.0/settings.ini".text = toGtkINI { Settings = cfg.settings; };
+      }
+      // optionalAttrs (cfg.css.gtk3 != "") {
+        ".config/gtk-3.0/gtk.css".text = cfg.css.gtk3;
+      } 
+      // optionalAttrs (cfg.css.gtk4 != "") {
+        ".config/gtk-4.0/gtk.css".text = cfg.css.gtk4;
+      });
 
-    # Set sessionVariables that will be loaded in the shell modules
+    # Set sessionVariables to load
     environment.sessionVariables = {
-      GTK2_RC_FILES = "${config.directory}/.config/.gtkrc-2.0";
-      GTK_THEME = cfg.theme.name;
+      GTK2_RC_FILES = "${config.directory}/.gtkrc-2.0";
+      GTK_THEME = mkIf (hasAttr "theme-name" cfg.settings) cfg.settings.theme-name;
     };
   };
 }
