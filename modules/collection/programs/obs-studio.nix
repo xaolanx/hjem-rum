@@ -11,7 +11,7 @@
   cfg = config.rum.programs.obs-studio;
 in {
   options.rum.programs.obs-studio = {
-    enable = mkEnableOption "obs-studio";
+    enable = mkEnableOption "OBS Studio";
 
     package = mkPackageOption pkgs "obs-studio" {};
 
@@ -22,7 +22,6 @@ in {
         pkgs.obs-studio-plugins.wlrobs #for screen capture w/wayland
         pkgs.obs-studio-plugins.obs-vkcapture #vulkan/opengl game capture
       ];
-
       description = ''
         A list of plugins the obs-studio package will be wrapped with.
         Set of plugins available in nixpkgs under the obs-studio-plugins set.

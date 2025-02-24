@@ -6,12 +6,10 @@
 }: let
   inherit (lib.attrsets) isAttrs mapAttrs' mapAttrsToList nameValuePair optionalAttrs;
   inherit (lib.generators) mkKeyValueDefault mkValueStringDefault toINIWithGlobalSection;
-  inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
   inherit (lib.strings) concatStringsSep;
   inherit (lib.types) attrs attrsOf;
-
-  cfg = config.rum.programs.ghostty;
 
   mkKeyValue = key: value:
     if isAttrs value
@@ -33,10 +31,14 @@
         text = toGhosttyConf {globalSection = value.${name};};
       })
     themes;
+
+  cfg = config.rum.programs.ghostty;
 in {
   options.rum.programs.ghostty = {
     enable = mkEnableOption "Ghostty";
-    package = mkPackageOption pkgs "Ghostty" {};
+
+    package = mkPackageOption pkgs "ghostty" {};
+
     settings = mkOption {
       type = attrs;
       default = {};
@@ -76,7 +78,6 @@ in {
             "14" = "#5abfb5";
             "15" = "#b5bfe2";
           };
-
           background = "#303446";
           foreground = "#c6d0f5";
           cursor-color = "#f2d5cf";
@@ -96,8 +97,10 @@ in {
     packages = [cfg.package];
     files =
       {
-        ".config/ghostty/config".text = mkIf (cfg.settings != {}) toGhosttyConf {globalSection = cfg.settings;};
+        ".config/ghostty/config".text = mkIf (cfg.settings != {}) (
+          toGhosttyConf {globalSection = cfg.settings;}
+        );
       }
-      // optionalAttrs (cfg.themes != {}) mkThemes cfg.themes;
+      // optionalAttrs (cfg.themes != {}) (mkThemes cfg.themes);
   };
 }
