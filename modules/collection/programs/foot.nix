@@ -39,7 +39,6 @@ in {
           indicator-position = "none";
         };
       };
-
       description = ''
         Settings are written as an INI file to ${config.directory}/.config/foot/foot.ini.
 

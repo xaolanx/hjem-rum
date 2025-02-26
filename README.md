@@ -38,13 +38,13 @@ outputs = {
 } @ inputs: {
     nixosConfigurations = {
         default = nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs; };
+            specialArgs = {inherit inputs;};
             modules = [
-                # Whatever other modules you are importing
-
                 # Import the flakes' modules
                 inputs.hjem.nixosModules.default
                 inputs.hjem-rum.nixosModules.default
+
+                # Whatever other modules you are importing
             ];
         };
     };
