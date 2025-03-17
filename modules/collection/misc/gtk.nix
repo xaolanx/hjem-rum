@@ -5,14 +5,14 @@
   ...
 }: let
   inherit (lib.options) mkOption mkEnableOption;
-  inherit (lib.types) listOf package lines;
+  inherit (lib.types) listOf package lines str;
   inherit (lib.modules) mkIf;
   inherit (lib.lists) optionals;
   inherit (lib.attrsets) optionalAttrs;
   inherit (lib.rum.generators.gtk) toGtk2Text toGtkINI;
   inherit (lib.rum.types) gtkType;
   inherit (lib.rum.attrsets) attrNamesHasPrefix;
-  inherit (builtins) hasAttr;
+  inherit (builtins) hasAttr concatStringsSep;
 
   cfg = config.rum.gtk;
 in {
@@ -73,6 +73,23 @@ in {
         '';
       };
     };
+    bookmarks = mkOption {
+      type = listOf str;
+      default = [];
+      example = [
+        "file:///home/user/Documents Documents"
+        "file:///home/user/Music Music"
+        "file:///home/user/Pictures Pictures"
+        "file:///home/user/Videos Videos"
+        "file:///home/user/Downloads Downloads"
+      ];
+      description = ''
+        Bookmarks used by GTK file managers (ex. Nautilus).
+        Each entry should have one of the following formats:
+        - `[uri]`
+        - `[uri] <display name>`
+      '';
+    };
   };
   config = mkIf cfg.enable {
     # We could also just automatically fix it, but for now, simply
@@ -94,6 +111,9 @@ in {
       }
       // optionalAttrs (cfg.css.gtk4 != "") {
         ".config/gtk-4.0/gtk.css".text = cfg.css.gtk4;
+      }
+      // optionalAttrs (cfg.bookmarks != []) {
+        ".config/gtk-3.0/bookmarks".text = concatStringsSep "\n" cfg.bookmarks;
       }
     );
 
