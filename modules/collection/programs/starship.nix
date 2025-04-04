@@ -33,6 +33,11 @@ in {
           error_symbol = "➜";
         };
       };
+
+      description = ''
+        The configuration converted to TOML and written to `''${config.directory}/.config/starship.toml`.
+        Please reference https://starship.rs/config/ for config options.
+      '';
     };
     integrations = {
       zsh.enable = mkOption {
