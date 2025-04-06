@@ -3,35 +3,33 @@
   lib,
   pkgs,
   ...
-}:
-let
+}: let
   inherit (lib.modules) mkIf;
   inherit (lib.attrsets) optionalAttrs mapAttrs' nameValuePair;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
   inherit (lib.types) attrsOf;
 
-  toml = pkgs.formats.toml { };
+  toml = pkgs.formats.toml {};
 
-  mkThemes =
-    themes:
+  mkThemes = themes:
     mapAttrs' (
       name: value:
-      nameValuePair ".config/helix/themes/${name}.toml" {
-        source = (toml.generate "helix-theme-${name}.toml" value);
-      }
-    ) themes;
+        nameValuePair ".config/helix/themes/${name}.toml" {
+          source = toml.generate "helix-theme-${name}.toml" value;
+        }
+    )
+    themes;
 
   cfg = config.rum.programs.helix;
-in
-{
+in {
   options.rum.programs.helix = {
     enable = mkEnableOption "Helix";
 
-    package = mkPackageOption pkgs "helix" { };
+    package = mkPackageOption pkgs "helix" {};
 
     settings = mkOption {
       type = toml.type;
-      default = { };
+      default = {};
       example = {
         editor = {
           line-number = "relative";
@@ -52,7 +50,7 @@ in
 
     languages = mkOption {
       type = toml.type;
-      default = { };
+      default = {};
       example = {
         language-server.vscode-json-language-server.command = "vscode-json-languageserver";
       };
@@ -66,7 +64,7 @@ in
 
     themes = mkOption {
       type = attrsOf toml.type;
-      default = { };
+      default = {};
       example = {
         theme1 = {
           "ui.background" = "white";
@@ -87,15 +85,17 @@ in
   };
 
   config = mkIf cfg.enable {
-    packages = [ cfg.package ];
-    files = {
-      ".config/helix/config.toml".source = mkIf (cfg.settings != { }) (
-        toml.generate "helix-config.toml" cfg.settings
-      );
+    packages = [cfg.package];
+    files =
+      {
+        ".config/helix/config.toml".source = mkIf (cfg.settings != {}) (
+          toml.generate "helix-config.toml" cfg.settings
+        );
 
-      ".config/helix/languages.toml".source = mkIf (cfg.languages != { }) (
-        toml.generate "helix-languages.toml" cfg.languages
-      );
-    } // optionalAttrs (cfg.themes != { }) (mkThemes cfg.themes);
+        ".config/helix/languages.toml".source = mkIf (cfg.languages != {}) (
+          toml.generate "helix-languages.toml" cfg.languages
+        );
+      }
+      // optionalAttrs (cfg.themes != {}) (mkThemes cfg.themes);
   };
 }
