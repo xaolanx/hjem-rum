@@ -11,5 +11,4 @@
   imports = lib.filesystem.listFilesRecursive ./collection;
 
   _module.args.rumLib = rumLib;
-  # osConfig will be provided upstream by Hjem
 }

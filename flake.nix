@@ -20,6 +20,13 @@
       };
       default = self.hjemModules.hjem-rum;
     };
+    nixosModules = {
+      hjem-rum = import ./modules/nixos.nix {
+        inherit (nixpkgs) lib;
+        inherit rumLib;
+      };
+      default = self.nixosModules.hjem-rum;
+    };
 
     lib = rumLib;
 
