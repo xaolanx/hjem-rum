@@ -2,12 +2,13 @@
   lib,
   config,
   pkgs,
+  rumLib,
   ...
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkPackageOption mkOption;
-  inherit (lib.rum.generators.hypr) toHyprconf;
-  inherit (lib.rum.types) hyprType;
+  inherit (rumLib.generators.hypr) toHyprconf;
+  inherit (rumLib.types) hyprType;
 
   cfg = config.rum.programs.hyprlock;
 in {

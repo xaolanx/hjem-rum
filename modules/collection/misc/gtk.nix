@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  rumLib,
   ...
 }: let
   inherit (lib.options) mkOption mkEnableOption;
@@ -9,9 +10,9 @@
   inherit (lib.modules) mkIf;
   inherit (lib.lists) optionals;
   inherit (lib.attrsets) optionalAttrs;
-  inherit (lib.rum.generators.gtk) toGtk2Text toGtkINI;
-  inherit (lib.rum.types) gtkType;
-  inherit (lib.rum.attrsets) attrNamesHasPrefix;
+  inherit (rumLib.generators.gtk) toGtk2Text toGtkINI;
+  inherit (rumLib.types) gtkType;
+  inherit (rumLib.attrsets) attrNamesHasPrefix;
   inherit (builtins) hasAttr concatStringsSep;
 
   cfg = config.rum.gtk;

@@ -11,14 +11,17 @@
     ...
   }: let
     forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
-    extendedLib = nixpkgs.lib.extend (final: prev: import ./modules/lib/default.nix {lib = prev;});
+    rumLib = import ./modules/lib/default.nix {inherit (nixpkgs) lib;};
   in {
     hjemModules = {
-      hjem-rum = import ./modules/hjem.nix {lib = extendedLib;};
+      hjem-rum = import ./modules/hjem.nix {
+        inherit (nixpkgs) lib;
+        inherit rumLib;
+      };
       default = self.hjemModules.hjem-rum;
     };
 
-    lib = extendedLib;
+    lib = rumLib;
 
     devShells = forAllSystems (
       system: let

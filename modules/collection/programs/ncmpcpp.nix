@@ -2,13 +2,14 @@
   config,
   lib,
   pkgs,
+  rumLib,
   ...
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
   inherit (lib.types) attrsOf listOf oneOf int str bool;
-  inherit (lib.rum.generators.ncmpcpp) toNcmpcppBinding toNcmpcppSettings;
-  inherit (lib.rum.types) ncmpcppBindingType;
+  inherit (rumLib.generators.ncmpcpp) toNcmpcppBinding toNcmpcppSettings;
+  inherit (rumLib.types) ncmpcppBindingType;
 
   cfg = config.rum.programs.ncmpcpp;
 in {

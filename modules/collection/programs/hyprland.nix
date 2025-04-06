@@ -2,17 +2,19 @@
   lib,
   osConfig,
   config,
+  rumLib,
   ...
 }: let
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkEnableOption mkOption;
-  inherit (lib.rum.attrsets) filterKeysPrefixes;
-  inherit (lib.rum.generators.environment) toEnvExport;
-  inherit (lib.rum.generators.hypr) toHyprconf pluginsToHyprconf;
-  inherit (lib.rum.types) hyprType;
   inherit (lib.strings) optionalString;
   inherit (lib.types) either lines listOf package path str;
+
+  inherit (rumLib.attrsets) filterKeysPrefixes;
+  inherit (rumLib.generators.environment) toEnvExport;
+  inherit (rumLib.generators.hypr) toHyprconf pluginsToHyprconf;
+  inherit (rumLib.types) hyprType;
 
   cfg = config.rum.programs.hyprland;
 in {
