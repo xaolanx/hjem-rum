@@ -9,9 +9,9 @@
 
   toml = pkgs.formats.toml {};
 
-  cfg = config.programs.starship;
+  cfg = config.rum.programs.starship;
 in {
-  options.programs.starship = {
+  options.rum.programs.starship = {
     enable = mkEnableOption "starship module.";
     package = mkPackageOption pkgs "starship" {};
     settings = mkOption {
