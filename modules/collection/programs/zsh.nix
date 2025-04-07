@@ -6,6 +6,7 @@
 }: let
   inherit (builtins) any attrValues filter;
   inherit (lib.attrsets) mapAttrsToList;
+  inherit (lib.meta) getExe;
   inherit (lib.modules) mkIf;
   inherit (lib.options) literalExpression mkEnableOption mkPackageOption mkOption;
   inherit (lib.strings) concatStringsSep optionalString;
@@ -68,7 +69,7 @@ in {
     integrations = {
       starship.enable = mkOption {
         type = bool;
-        default = config.programs.starship.enable;
+        default = config.rum.programs.starship.enable;
         example = true;
         description = "Whether to enable starship integration.";
       };
@@ -95,7 +96,7 @@ in {
           optionalString check.plugins (mkPlugins cfg.plugins)
           + optionalString check.initConfig cfg.initConfig
           + optionalString cfg.integrations.starship.enable
-          ''eval "$(${config.programs.starship.package}/bin/starship init zsh)"''
+          ''eval "$(${getExe config.rum.programs.starship.package} init zsh)"''
         );
     };
   };
