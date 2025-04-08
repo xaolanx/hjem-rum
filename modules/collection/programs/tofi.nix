@@ -2,12 +2,13 @@
   config,
   lib,
   pkgs,
+  rumLib,
   ...
 }: let
   inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption mkPackageOption;
   inherit (lib.generators) toKeyValue;
-  inherit (lib.rum.types) tofiSettingsType;
+  inherit (rumLib.types) tofiSettingsType;
 
   cfg = config.rum.programs.tofi;
 in {

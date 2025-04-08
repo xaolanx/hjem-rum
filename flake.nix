@@ -3,11 +3,6 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    hjem = {
-      url = "github:feel-co/hjem";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -16,14 +11,24 @@
     ...
   }: let
     forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
-    extendedLib = nixpkgs.lib.extend (final: prev: import ./modules/lib/default.nix {lib = prev;});
+    rumLib = import ./modules/lib/default.nix {inherit (nixpkgs) lib;};
   in {
+    hjemModules = {
+      hjem-rum = import ./modules/hjem.nix {
+        inherit (nixpkgs) lib;
+        inherit rumLib;
+      };
+      default = self.hjemModules.hjem-rum;
+    };
     nixosModules = {
-      hjem-rum = import ./modules/nixos.nix {lib = extendedLib;};
+      hjem-rum = import ./modules/nixos.nix {
+        inherit (nixpkgs) lib;
+        inherit rumLib;
+      };
       default = self.nixosModules.hjem-rum;
     };
 
-    lib = extendedLib;
+    lib = rumLib;
 
     devShells = forAllSystems (
       system: let
