@@ -10,7 +10,7 @@ Hjem was initially created as an improved implementation of the `home` functiona
 
 ## Setup
 
-> [!WARNING]
+> \[!WARNING\]
 > Importing Hjem Rum as a NixOS Module is being deprecated in favor of a Hjem Module. While this should not change user-side functionality, it does mean you will need to change where you import Hjem Rum in your config, and how you do so. If you were previously using Hjem Rum with the soon-to-be deprecated NixOS Module (importing it into `imports`), please see below on how to update to the Hjem Module. For more information on why this was done, see [#30](https://github.com/snugnug/hjem-rum/pull/30).
 
 To start using Hjem Rum, you must first import the flake and its modules into your system(s):
