@@ -36,6 +36,7 @@
             python312Packages.mdformat-footnote
             python312Packages.mdformat-toc
             python312Packages.mdformat-gfm
+            self.formatter.${system}
           ];
           shellHook = ''
             pre-commit install
