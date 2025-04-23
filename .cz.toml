@@ -2,17 +2,29 @@
 name = "cz_customize"
 
 [tool.commitizen.customize]
-message_template = "{{scope}}: {{message}}"
-example = "flake: add new input"
+message_template = "{{top_level_scope}}{% if specific_scope %}/{{specific_scope}}{% endif %}: {{message}}"
+example = "meta: add new input"
 schema = "<scope>: <message>"
-schema_pattern = "^[a-zA-Z]+(?:\\/[a-zA-Z]+)?:\\s.+$"
-commit_parser = "^(?P<scope>[a-z]+(?:\\/[a-z]+)?):\\s(?P<message>\\w.+)"
+schema_pattern = "^[a-z]+(?:\\/[a-zA-Z0-9_-]+)?:\\s.+$"
+commit_parser = "^(?P<scope>[a-z]+(?:\\/[a-zA-Z0-9_-]+)?):\\s(?P<message>\\w.+)"
 
-# for interactive commits
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "top_level_scope"
+message = "Choose the top-level scope in which your changes are going:"
+choices = [
+  {value = "programs", name = "programs: for modules that are programs (e.g. fish)"},
+  {value = "misc", name = "misc: for modules that aren't programs nor services (e.g. gtk)"},
+  {value = "lib", name = "lib: for new hjem-rum lib functions"},
+  {value = "meta", name = "meta: for repo related changes (e.g. formatting, adding a new commit hook...)"},
+  {value = "docs", name = "docs: for documentation purposes (e.g. adding the contributing guidelines"},
+  {value = "flake", name = "flake: for updates to the flake (e.g. add a new input)"}
+]
+
 [[tool.commitizen.customize.questions]]
 type = "input"
-name = "scope"
-message = "Enter the scope (e.g., 'modules', 'programs/example'):"
+name = "specific_scope"
+message = "Enter the optional specific scope under which your commit will go (e.g. foo for a program under programs/foo).:"
 
 [[tool.commitizen.customize.questions]]
 type = "input"
