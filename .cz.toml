@@ -1,0 +1,32 @@
+[tool.commitizen]
+name = "cz_customize"
+
+[tool.commitizen.customize]
+message_template = "{{top_level_scope}}{% if specific_scope %}/{{specific_scope}}{% endif %}: {{message}}"
+example = "meta: add new input"
+schema = "<scope>: <message>"
+schema_pattern = "^[a-z]+(?:\\/[a-zA-Z0-9_-]+)?:\\s.+$"
+commit_parser = "^(?P<scope>[a-z]+(?:\\/[a-zA-Z0-9_-]+)?):\\s(?P<message>\\w.+)"
+
+[[tool.commitizen.customize.questions]]
+type = "list"
+name = "top_level_scope"
+message = "Choose the top-level scope in which your changes are going:"
+choices = [
+  {value = "programs", name = "programs: for modules that are programs (e.g. fish)"},
+  {value = "misc", name = "misc: for modules that aren't programs nor services (e.g. gtk)"},
+  {value = "lib", name = "lib: for new hjem-rum lib functions"},
+  {value = "meta", name = "meta: for repo related changes (e.g. formatting, adding a new commit hook...)"},
+  {value = "docs", name = "docs: for documentation purposes (e.g. adding the contributing guidelines"},
+  {value = "flake", name = "flake: for updates to the flake (e.g. add a new input)"}
+]
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "specific_scope"
+message = "Enter the optional specific scope under which your commit will go (e.g. foo for a program under programs/foo).:"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "message"
+message = "Enter the commit message (no punctuation at start):"
