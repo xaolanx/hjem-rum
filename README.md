@@ -27,10 +27,9 @@ inputs = {
     };
     hjem-rum = {
         url = "github:snugnug/hjem-rum";
-        # You may want hjem-rum's inputs to follow your defined
-        # inputs to minimize redundancies
+        # You may want hjem-rum to use your defined nixpkgs input to
+        # minimize redundancies
         inputs.nixpkgs.follows = "nixpkgs";
-        inputs.hjem.follows = "hjem";
     };
 };
 
