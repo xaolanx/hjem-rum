@@ -14,14 +14,21 @@
   cfg = config.rum.programs.ncmpcpp;
 in {
   options.rum.programs.ncmpcpp = {
-    enable = mkEnableOption ''
-      Enables the rum module for ncmpcpp, a mpd-based music player.
-    '';
+    enable = mkEnableOption "ncmpcpp, a mpd-based music player.";
 
     package = mkPackageOption pkgs "ncmpcpp" {
       extraDescription = ''
-        You can use an override to toggle certain features like the visualizer, a clock screen, and more.
-               Please check out the package source for a complete list.
+        You can override the package to customize certain settings that are baked into the package.
+
+        ```nix
+        package = pkgs.ncmpccpp.override {
+          # useful overrides in the package
+          outputsSupport = true; # outputs screen
+          visualizerSupport = false; # visualizer screen
+          clockSupport = true; # clock screen
+          taglibSupport = true; # tag editor
+        };
+        ```
       '';
     };
 
