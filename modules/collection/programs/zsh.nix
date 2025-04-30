@@ -7,7 +7,7 @@
   inherit (builtins) any attrValues filter;
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.meta) getExe;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkIf mkRenamedOptionModule;
   inherit (lib.options) literalExpression mkEnableOption mkPackageOption mkOption;
   inherit (lib.strings) concatStringsSep optionalString;
   inherit (lib.trivial) id;
@@ -37,6 +37,13 @@
 
   cfg = config.rum.programs.zsh;
 in {
+  imports = [
+    (
+      mkRenamedOptionModule
+      ["rum" "programs" "zsh" "integrations" "starship" "enable"]
+      ["rum" "programs" "starship" "integrations" "zsh" "enable"]
+    )
+  ];
   options.rum.programs.zsh = {
     enable = mkEnableOption "zsh module.";
     package = mkPackageOption pkgs "zsh" {};
@@ -66,14 +73,6 @@ in {
         done at this level, for the sake of organization.
       '';
     };
-    integrations = {
-      starship.enable = mkOption {
-        type = bool;
-        default = config.rum.programs.starship.enable;
-        example = true;
-        description = "Whether to enable starship integration.";
-      };
-    };
     initConfig = mkShellConfigOption "{file}`.zshrc`";
     loginConfig = mkShellConfigOption "{file}`.zlogin`";
     logoutConfig = mkShellConfigOption "{file}`.zlogout`";
@@ -95,8 +94,6 @@ in {
         (
           optionalString check.plugins (mkPlugins cfg.plugins)
           + optionalString check.initConfig cfg.initConfig
-          + optionalString cfg.integrations.starship.enable
-          ''eval "$(${getExe config.rum.programs.starship.package} init zsh)"''
         );
     };
   };

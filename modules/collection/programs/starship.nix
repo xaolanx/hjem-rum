@@ -4,8 +4,10 @@
   config,
   ...
 }: let
-  inherit (lib.modules) mkIf;
+  inherit (lib.meta) getExe;
+  inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
+  inherit (lib.types) bool;
 
   toml = pkgs.formats.toml {};
 
@@ -32,6 +34,16 @@ in {
         };
       };
     };
+    integrations = {
+      zsh.enable = mkOption {
+        type = bool;
+        default = false;
+        example = true;
+        description = ''
+          Whether to enable starship integration with zsh.
+        '';
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -39,6 +51,14 @@ in {
     files = {
       ".config/starship.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "starship.toml" cfg.settings
+      );
+
+      /*
+      Needs to be added to the end of ~/.zshrc, hence the `mkIf` and `mkAfter`.
+      https://starship.rs/guide/#step-2-set-up-your-shell-to-use-starship
+      */
+      ".zshrc".text = mkIf (config.rum.programs.zsh.enable && cfg.integrations.zsh.enable) (
+        mkAfter ''eval "$(${getExe cfg.package} init zsh)"''
       );
     };
   };
