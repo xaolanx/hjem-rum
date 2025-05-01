@@ -2,11 +2,16 @@
 name = "cz_customize"
 
 [tool.commitizen.customize]
-message_template = "{{top_level_scope}}{% if specific_scope %}/{{specific_scope}}{% endif %}: {{message}}"
+message_template = """{{top_level_scope}}{% if specific_scope %}/{{specific_scope}}{% endif %}: {{message}}
+
+{% if body %}\
+{{body}}\
+{% endif %}
+"""
 example = "meta: add new input"
-schema = "<scope>: <message>"
-schema_pattern = "^[a-z]+(?:\\/[a-zA-Z0-9_-]+)?:\\s.+$"
-commit_parser = "^(?P<scope>[a-z]+(?:\\/[a-zA-Z0-9_-]+)?):\\s(?P<message>\\w.+)"
+schema = "<scope>: <message>\n\n<body>"
+# schema_pattern = "^[a-z]+(?:\\/[a-zA-Z0-9_-]+)?:\\s.+$"
+schema_pattern = "^(?P<scope>[a-z]+(?:\\/[a-zA-Z0-9_-]+)?):\\s(?P<message>.*)(\\n\\n(?P<body>.*))?"
 
 [[tool.commitizen.customize.questions]]
 type = "list"
@@ -29,4 +34,9 @@ message = "Enter the optional specific scope under which your commit will go (e.
 [[tool.commitizen.customize.questions]]
 type = "input"
 name = "message"
-message = "Enter the commit message (no punctuation at start):"
+message = "Write a short and imperative summary of the code changes: (lower case and no period)\n"
+
+[[tool.commitizen.customize.questions]]
+type = "input"
+name = "body"
+message = "Provide additional contextual information about the code changes: (press [enter] to skip)\n"
