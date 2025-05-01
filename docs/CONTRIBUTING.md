@@ -44,28 +44,32 @@ details, the most important thing is to make and switch to a branch from HEAD.
 
 ### Commit format<a name="commit-format"></a>
 
-> \[!INFO\]
-> Our dev shell allows for interactive commits, through the means of
+> \[!INFO\] Our dev shell allows for interactive commits, through the means of
 > [commitizen](https://github.com/commitizen-tools/commitizen). If this is
 > preferred, you can run `cz commit` to be prompted to build your commit.
 
 For consistency, we do enforce a strict (but simple) commit style, that will be
-linted against. The format is as follows:
+linted against. The format is as follows (sections between `[]` are optional):
 
 ```console
 <top_level_scope>/[<specific_scope>]: <message>
 
-<body>
+[<body>]
 ```
 
-- \<scope>: the scope of your commit (e.g. if making a change to a module, this
-  would be `programs/foot`). We do enforce a two scope level limit, so
-  `modules/programs/foot` will not work. For anything else, we tend to use
-  semantic scopes such as `meta` for CI/repo related changes.
+- \<top_level_scope>: the main scope of your commit. If making a change to a
+  program, this would be `programs`). For changes unrelated to the modules API,
+  we tend to use semantic scopes such as `meta` for CI/repo related changes.
 
-- \<message>: A free form commit message. Having a commit body is encouraged
-  when your changes are difficult to explain, unless you're writing in-depth
-  code comments (it is still preferred however).
+- \[\<specific_scope>\]: An optional, more specific scope for your module. If
+  making changes to a specific program, this would be `programs/foot`.
+
+- \<message>: A free form commit message. Needs to be imperative and without
+  punctuation (e.g. `do stuff` instead of `did stuff.`).
+
+- \[\<body>\]: A free form commit body. Having one is encouraged when your
+  changes are difficult to explain, unless you're writing in-depth code comments
+  (it is still preferred however).
 
 You can now make your changes in your editor of choice. After committing your
 changes, you can run:
