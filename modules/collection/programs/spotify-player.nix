@@ -15,7 +15,26 @@ in {
   options.rum.programs.spotify-player = {
     enable = mkEnableOption "spotify_player";
 
-    package = mkPackageOption pkgs "spotify-player" {};
+    package = mkPackageOption pkgs "spotify-player" {
+      extraDescription = ''
+        You can use an override to configure certain settings
+        baked into the package.
+
+        ```nix
+        package = pkgs.spotify-player.override {
+          # Useful overrides in the package
+          withStreaming = true;
+          withDaemon = true;
+          withAudioBackend = "rodio"; # alsa, pulseaudio, rodio, portaudio, jackaudio, rodiojack, sdl
+          withMediaControl = true;
+          withImage = true;
+          withNotify = true;
+          withSixel = true;
+          withFuzzy = true;
+        };
+        ```
+      '';
+    };
 
     settings = mkOption {
       type = toml.type;

@@ -32,7 +32,17 @@ in {
   options.rum.programs.ghostty = {
     enable = mkEnableOption "Ghostty";
 
-    package = mkPackageOption pkgs "ghostty" {};
+    package = mkPackageOption pkgs "ghostty" {
+      extraDescription = ''
+        You can use an override to configure some settings baked into the package.
+
+        ```nix
+        package = pkgs.ghostty.override {
+          withAdwaita = true;
+        };
+        ```
+      '';
+    };
 
     settings = mkOption {
       type = keyValue.type;
