@@ -3,15 +3,33 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     self,
     nixpkgs,
+    treefmt-nix,
     ...
   }: let
-    forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "aarch64-linux"];
+    supportedSystems = ["x86_64-linux" "aarch64-linux"];
+
+    forAllSystems = function:
+      nixpkgs.lib.genAttrs
+      supportedSystems
+      (system: function nixpkgs.legacyPackages.${system});
+
     rumLib = import ./modules/lib/default.nix {inherit (nixpkgs) lib;};
+    treefmtEval = forAllSystems (pkgs:
+      treefmt-nix.lib.evalModule pkgs
+      {
+        projectRootFile = "flake.nix";
+        programs.alejandra.enable = true;
+        programs.mdformat.enable = true;
+      });
   in {
     hjemModules = {
       hjem-rum = import ./modules/hjem.nix {
@@ -31,18 +49,17 @@
     lib = rumLib;
 
     devShells = forAllSystems (
-      system: let
-        pkgs = nixpkgs.legacyPackages.${system};
-      in {
+      pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
             pre-commit
-            python312Packages.mdformat
             python312Packages.mdformat-footnote
             python312Packages.mdformat-toc
             python312Packages.mdformat-gfm
-            self.formatter.${system}
             python312Packages.commitizen
+          ];
+          inputsFrom = [
+            treefmtEval.${pkgs.system}.config.build.devShell
           ];
           shellHook = ''
             pre-commit install --hook-type pre-commit --hook-type commit-msg --hook-type pre-push
@@ -52,6 +69,6 @@
     );
 
     # Provide the default formatter to invoke on 'nix fmt'.
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forAllSystems (pkgs: treefmtEval.${pkgs.system}.config.build.wrapper);
   };
 }
