@@ -44,7 +44,8 @@ details, the most important thing is to make and switch to a branch from HEAD.
 
 ### Commit format<a name="commit-format"></a>
 
-> \[!INFO\] Our dev shell allows for interactive commits, through the means of
+> [!INFO]
+> Our dev shell allows for interactive commits, through the means of
 > [commitizen](https://github.com/commitizen-tools/commitizen). If this is
 > preferred, you can run `cz commit` to be prompted to build your commit.
 
