@@ -28,7 +28,11 @@
       {
         projectRootFile = "flake.nix";
         programs.alejandra.enable = true;
-        programs.mdformat.enable = true;
+        programs.deno.enable = true;
+
+        settings = {
+          deno.includes = ["*.md"];
+        };
       });
   in {
     hjemModules = {
@@ -53,9 +57,6 @@
         default = pkgs.mkShell {
           packages = with pkgs; [
             pre-commit
-            python312Packages.mdformat-footnote
-            python312Packages.mdformat-toc
-            python312Packages.mdformat-gfm
             python312Packages.commitizen
           ];
           inputsFrom = [
