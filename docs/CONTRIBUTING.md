@@ -11,23 +11,6 @@ If you are familiar with contributing to open source software, you can safely
 skip ahead to [Core Principles](#core-principles). Otherwise, read the following
 section to learn how to fork a repo and open a PR.
 
-<!-- mdformat-toc start --slug=github --maxlevel=6 --minlevel=2 -->
-
-- [Getting Started](#getting-started)
-  - [Commit format](#commit-format)
-- [Core Principles](#core-principles)
-- [Guidelines](#guidelines)
-  - [Where to put a new module](#where-to-put-a-new-module)
-  - [Aliases](#aliases)
-  - [Writing Options](#writing-options)
-  - [Conditional Config](#conditional-config)
-  - [Extending Lib](#extending-lib)
-  - [Docs](#docs)
-  - [Tests](#tests)
-- [Reviewing a PR](#reviewing-a-pr)
-
-<!-- mdformat-toc end -->
-
 ## Getting Started<a name="getting-started"></a>
 
 To begin contributing to HJR, you will first need to create a fork off of the
@@ -44,7 +27,8 @@ details, the most important thing is to make and switch to a branch from HEAD.
 
 ### Commit format<a name="commit-format"></a>
 
-> \[!INFO\] Our dev shell allows for interactive commits, through the means of
+> [!INFO]
+> Our dev shell allows for interactive commits, through the means of
 > [commitizen](https://github.com/commitizen-tools/commitizen). If this is
 > preferred, you can run `cz commit` to be prompted to build your commit.
 

@@ -17,10 +17,10 @@ repos:
         files: .+\.nix$
 
       # mdformat automatically uses any plugin that is installed
-      - id: mdformat
+      - id: deno
         name: format markdown files
         language: system
-        entry: mdformat
+        entry: deno fmt --check
         files: .+\.md$
 
       - id: commitizen
