@@ -2,9 +2,9 @@
 
 Hjem Rum's testing system is designed with simplicity in mind, so we shy away
 from other testing frameworks and stick with `runTest`, from the
-[internal NixOS lib][nixos-testing] located in the nixpkgs monorepo. There are
-no non-standard abstractions in regards to writing the tests, so they should be
-written just like any other test that uses the NixOS Test Driver.
+[internal NixOS lib] located in the nixpkgs monorepo. There are no non-standard
+abstractions in regards to writing the tests, so they should be written just
+like any other test that uses the NixOS Test Driver.
 
 ## Creating tests
 
@@ -23,13 +23,29 @@ checks = hjem-rum-services = import ./modules/tests (mkCheckArgs ./modules/tests
   # Just // (import ./modules/tests and pass mkCheckArgs with your brand-new directory to it.
 ```
 
+### Naming
+
+To reduce CI run time, we only run checks for which the module or test file has
+changed. For this association to work, the following naming scheme has to be
+respected: `<category>-<module name>`.
+
+Below is a list of files, and their corresponding name.
+
+- `modules/collection/programs/foot.nix` -> `programs-foot`
+- `modules/tests/programs/fish.nix` -> `programs-fish`
+- `modules/tests/programs/ncmpcpp/ncmpcpp.nix` -> `programs-ncmpcpp`
+
+You may declare multiple test files for a module by having all of those names
+start with the aformentioned pattern, such as `programs-foot-test-plugins`.
+
+> [!IMPORTANT]
+> If you do not follow this rule, your tests will not be run during CI.
+
 ## Writing tests
 
 Tests for Hjem Rum are written just like any other test, so it might be worth to
-take a read at how NixOS tests work. [nix.dev] provides a
-[useful guide][nixdev-testing], as does the
-[NixOS Manual][nixos-running-tests][^1], both detailing how to use the
-framework.
+take a read at how NixOS tests work. [nix.dev provides a useful guide], as does
+the [NixOS Manual][^1], both detailing how to use the framework.
 
 Our test system has some pre-defined things aiming at avoid boilerplate code:
 
@@ -40,14 +56,13 @@ Our test system has some pre-defined things aiming at avoid boilerplate code:
 `self`, `lib` and `pkgs` are also passed to every test module, so you're free to
 use them as you will.
 
-The [ncmpcpp test module][ncmpcpp-test-module] was written to serve as an
-example for future tests, and provides comments for each step of the
-`testScript`. Care should be taken to wait for the proper systemd targets to be
-reached, change users to run commands, and avoid other possible footguns. The
-approach this module uses to test its configuration is to have a file for each
-configuration alongside it, which then gets passed to the test VM and gets
-evaluated with diff. You can use other approaches if its more convenient, that's
-just a suggestion.
+The [ncmpcpp test module] was written to serve as an example for future tests,
+and provides comments for each step of the `testScript`. Care should be taken to
+wait for the proper systemd targets to be reached, change users to run commands,
+and avoid other possible footguns. The approach this module uses to test its
+configuration is to have a file for each configuration alongside it, which then
+gets passed to the test VM and gets evaluated with diff. You can use other
+approaches if its more convenient, that's just a suggestion.
 
 You can also debug your tests through a Python REPL by running:
 
@@ -66,8 +81,7 @@ nix run .#checks.<arch>.vm-test-run-<name>.driver -- --interactive
     certain concepts, so the code ran by them should be interchangeable between
     one another.
 
-[ncmpcpp-test-module]: ../modules/tests/programs/ncmpcpp/ncmpcpp.nix
-[nix.dev]: https://nix.dev/
-[nixdev-testing]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
-[nixos-running-tests]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
-[nixos-testing]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
+[ncmpcpp test module]: ../modules/tests/programs/ncmpcpp/ncmpcpp.nix
+[nix.dev provides a useful guide]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
+[NixOS Manual]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
+[internal NixOS lib]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
