@@ -8,20 +8,13 @@ repos:
       - id: end-of-file-fixer
       - id: check-yaml
       - id: check-added-large-files
+
   - repo: local
     hooks:
-      - id: nix-fmt
-        name: format nix files
+      - id: treefmt
+        name: Formatting tree
         language: system
-        entry: nix fmt
-        files: .+\.nix$
-
-      # mdformat automatically uses any plugin that is installed
-      - id: deno
-        name: format markdown files
-        language: system
-        entry: deno fmt --check
-        files: .+\.md$
+        entry: treefmt
 
       - id: commitizen
         name: checks commit messages for our commit style
