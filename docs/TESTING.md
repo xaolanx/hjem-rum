@@ -1,5 +1,10 @@
 # Testing setup for modules
 
+[ncmpcpp test module]: ../modules/tests/programs/ncmpcpp/ncmpcpp.nix
+[nix.dev provides a useful guide]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
+[NixOS Manual]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
+[internal NixOS lib]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
+
 Hjem Rum's testing system is designed with simplicity in mind, so we shy away
 from other testing frameworks and stick with `runTest`, from the
 [internal NixOS lib] located in the nixpkgs monorepo. There are no non-standard
@@ -80,8 +85,3 @@ nix run .#checks.<arch>.vm-test-run-<name>.driver -- --interactive
     `runTest`, the former is just a wrapper around the latter, abstracting
     certain concepts, so the code ran by them should be interchangeable between
     one another.
-
-[ncmpcpp test module]: ../modules/tests/programs/ncmpcpp/ncmpcpp.nix
-[nix.dev provides a useful guide]: https://nix.dev/tutorials/nixos/integration-testing-using-virtual-machines.html
-[NixOS Manual]: https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests
-[internal NixOS lib]: https://github.com/NixOS/nixpkgs/tree/master/nixos/lib/testing
