@@ -52,13 +52,6 @@
       };
       default = self.hjemModules.hjem-rum;
     };
-    nixosModules = {
-      hjem-rum = import ./modules/nixos.nix {
-        inherit (nixpkgs) lib;
-        inherit rumLib;
-      };
-      default = self.nixosModules.hjem-rum;
-    };
     packages = forAllSystems (pkgs: {
       docs = pkgs.callPackage ./docs/package.nix {
         inherit (ndg.packages.${pkgs.system}) ndg;
