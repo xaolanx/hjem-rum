@@ -14,7 +14,7 @@
   inherit (rumLib.attrsets) attrNamesHasPrefix;
   inherit (builtins) hasAttr concatStringsSep;
 
-  cfg = config.rum.gtk;
+  cfg = config.rum.misc.gtk;
 in {
   imports = [(mkRenamedOptionModule ["rum" "gtk"] ["rum" "misc" "gtk"])];
   options.rum.misc.gtk = {
@@ -100,7 +100,7 @@ in {
     # We could also just automatically fix it, but for now, simply
     # check if the user accidentally included a 'gtk-' prefix.
     warnings = optionals (attrNamesHasPrefix "gtk-" cfg.settings) [
-      "Each option in 'rum.gtk.settings' is automatically prefixed with 'gtk-' if it is not present already. You have added this to an option unnecessarily."
+      "Each option in 'rum.misc.gtk.settings' is automatically prefixed with 'gtk-' if it is not present already. You have added this to an option unnecessarily."
     ];
 
     inherit (cfg) packages;
