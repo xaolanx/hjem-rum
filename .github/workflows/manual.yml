@@ -1,7 +1,6 @@
 name: "Build and deploy documentation"
 
 on:
-  pull_request: # testing workflow
   workflow_dispatch:
   push:
     branches:
