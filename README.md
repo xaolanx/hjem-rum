@@ -20,10 +20,10 @@ A module collection for managing your `$HOME` with [Hjem].
 > Hjem, the tooling Hjem Rum is built off of, is still unfinished. Use at your
 > own risk, and beware of bugs, issues, and missing features. If you do not feel
 > like being a beta tester, wait until Hjem is more finished. It is not yet
-> ready to fully replace Home Manager in the average user's config, but if you
-> truly want to, an option could be to use both in conjunction. Either way, as
-> Hjem continues to be developed, Hjem Rum will be worked on as we build modules
-> and functionality out to support average users.
+> ready to fully replace Home Manager in the average user's configuration, but
+> if you truly want to, an option could be to use both in conjunction. Either
+> way, as Hjem continues to be developed, Hjem Rum will be worked on as we build
+> modules and functionality out to support average users.
 
 Based on the Hjem tooling, Hjem Rum (literally meaning "home rooms") is a
 collection of modules for various programs and services to simplify the use of
@@ -33,7 +33,7 @@ Hjem was initially created as an improved implementation of the `home`
 functionality that Home Manager provides. Its purpose was minimal. Hjem Rum's
 purpose is to create a module collection based on that tooling in order to
 recreate the functionality that Home Manager's large collection of modules
-provides, allowing you to simply install and config a program.
+provides, allowing you to simply install and configure a program.
 
 ## Setup
 
@@ -101,8 +101,8 @@ hjem = {
 };
 ```
 
-You can then configure any of the options defined in this flake in any nix
-module:
+You may then configure any of the options defined in imported modules in your
+own configuration:
 
 ```nix
 # configuration.nix
