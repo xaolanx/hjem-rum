@@ -148,7 +148,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">91</span>
+        <span class="toc-count">94</span>
       </summary>
       <ul>
         
@@ -757,6 +757,30 @@
         <li>
           <a href="#option-rum-programs-starship-settings" title="rum.programs.starship.settings">
             starship.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-tealdeer-enable" title="rum.programs.tealdeer.enable">
+            tealdeer.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-tealdeer-package" title="rum.programs.tealdeer.package">
+            tealdeer.package
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-tealdeer-settings" title="rum.programs.tealdeer.settings">
+            tealdeer.settings
             
             
           </a>
@@ -2462,6 +2486,49 @@ Please reference <a href="https://starship.rs/config">Starship’s documentation
   scan_timeout = 10;
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/starship.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/starship.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-tealdeer-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-tealdeer-enable" class="option-anchor">rum.programs.tealdeer.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable tealdeer.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/tealdeer.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/tealdeer.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-tealdeer-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-tealdeer-package" class="option-anchor">rum.programs.tealdeer.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>package</code></div>
+  <div class="option-description"><p>The tealdeer package to use.</p>
+</div>
+  <div class="option-default">Default: <code>pkgs.tealdeer</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/tealdeer.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/tealdeer.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-tealdeer-settings">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-tealdeer-settings" class="option-anchor">rum.programs.tealdeer.settings</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>TOML value</code></div>
+  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/tealdeer/config.toml</code>.
+Please reference <a href="https://tealdeer-rs.github.io/tealdeer/config.html">tealdeer’s documentation</a> for config options.</p>
+</div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  updates = {
+    auto_update = true;
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/tealdeer.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/tealdeer.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-programs-tofi-enable">
   <h3 class="option-name">
