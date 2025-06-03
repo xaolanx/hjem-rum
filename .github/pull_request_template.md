@@ -7,7 +7,6 @@
 Related Issue(s): \<None\>
 
 [We do not currently have a policy against AI-generated code, but we ask you to disclose the usage of AI for code generation]::
-[This is to make sure the code quality is up to standard]::
 AI used to generate code included in this PR?: Yes/No
 
 
