@@ -27,8 +27,8 @@ in {
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
       mkAfter "${getExe cfg.package} --fish | source"
     );
-    rum.programs.zsh.initConfig = mkIf cfg.integrations.zsh.enable ''
-      source <(${getExe cfg.package} --zsh)
-    '';
+    rum.programs.zsh.initConfig = mkIf cfg.integrations.zsh.enable (
+      mkAfter "source <(${getExe cfg.package} --zsh)"
+    );
   };
 }
