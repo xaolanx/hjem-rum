@@ -148,7 +148,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">101</span>
+        <span class="toc-count">109</span>
       </summary>
       <ul>
         
@@ -221,6 +221,70 @@
         <li>
           <a href="#option-rum-programs-bottom-settings" title="rum.programs.bottom.settings">
             bottom.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-direnvrc" title="rum.programs.direnv.direnvrc">
+            direnv.direnvrc
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-enable" title="rum.programs.direnv.enable">
+            direnv.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-integrations-fish-enable" title="rum.programs.direnv.integrations.fish.enable">
+            direnv.integrations.fish.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-integrations-nix-direnv-enable" title="rum.programs.direnv.integrations.nix-direnv.enable">
+            direnv.integrations.nix-direnv.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-integrations-nix-direnv-package" title="rum.programs.direnv.integrations.nix-direnv.package">
+            direnv.integrations.nix-direnv.package
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-integrations-zsh-enable" title="rum.programs.direnv.integrations.zsh.enable">
+            direnv.integrations.zsh.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-package" title="rum.programs.direnv.package">
+            direnv.package
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-direnv-settings" title="rum.programs.direnv.settings">
+            direnv.settings
             
             
           </a>
@@ -1275,6 +1339,126 @@ for config options.</p>
   };
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/bottom.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/bottom.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-direnvrc">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-direnvrc" class="option-anchor">rum.programs.direnv.direnvrc</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>strings concatenated with "\n"</code></div>
+  <div class="option-description"><p>Bash code loaded before every <code>.envrc</code>. Good for personal extensions.
+Find community-maintained examples in <a href="https://github.com/direnv/direnv/wiki">direnv's wiki</a></p>
+</div>
+  <div class="option-default">Default: <code>""</code></div>
+  <div class="option-example">Example: <pre><code>''
+  : ''${XDG_CACHE_HOME:=$HOME/.cache}
+  declare -A direnv_layout_dirs
+  direnv_layout_dir() {
+  	echo "''${direnv_layout_dirs[$PWD]:=$(
+  		echo -n "$XDG_CACHE_HOME"/direnv/layouts/
+  		echo -n "$PWD" | sha1sum | cut -d ' ' -f 1
+  	)}"
+  }
+''</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-enable" class="option-anchor">rum.programs.direnv.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable direnv.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-integrations-fish-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-integrations-fish-enable" class="option-anchor">rum.programs.direnv.integrations.fish.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable direnv integration with fish.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-integrations-nix-direnv-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-integrations-nix-direnv-enable" class="option-anchor">rum.programs.direnv.integrations.nix-direnv.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable direnv integration with nix-direnv.</p>
+</div>
+  <div class="option-default">Default: <code>true</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-integrations-nix-direnv-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-integrations-nix-direnv-package" class="option-anchor">rum.programs.direnv.integrations.nix-direnv.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>package</code></div>
+  <div class="option-description"><p>The nix-direnv package to use.</p>
+</div>
+  <div class="option-default">Default: <code>pkgs.nix-direnv</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-integrations-zsh-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-integrations-zsh-enable" class="option-anchor">rum.programs.direnv.integrations.zsh.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable direnv integration with zsh.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-package" class="option-anchor">rum.programs.direnv.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>package</code></div>
+  <div class="option-description"><p>The direnv package to use.</p>
+</div>
+  <div class="option-default">Default: <code>pkgs.direnv</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-direnv-settings">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-direnv-settings" class="option-anchor">rum.programs.direnv.settings</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>TOML value</code></div>
+  <div class="option-description"><p>Configuration written to <code class="file-path">$HOME/.config/direnv/direnv.toml</code>.
+Please reference <a href="https://direnv.net/man/direnv.toml.1.html">direnv's documentation</a> for config options.</p>
+</div>
+  <div class="option-default">Default: <code>{ }</code></div>
+  <div class="option-example">Example: <pre><code>{
+  warn_timeout = "0s";
+  whitelist = {
+    prefix = [
+      "~/src"
+    ];
+  };
+}</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/direnv.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/direnv.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-programs-fish-abbrs">
   <h3 class="option-name">
