@@ -22,7 +22,7 @@ in {
       type = toml.type;
       default = {};
       example = {
-        warn_timeout = "0s";
+        global.warn_timeout = "0s";
         whitelist.prefix = ["~/src"];
       };
       description = ''
@@ -57,7 +57,12 @@ in {
     integrations = {
       fish.enable = mkEnableOption "direnv integration with fish";
       nix-direnv = {
-        enable = mkEnableOption "direnv integration with nix-direnv" // {default = true;};
+        enable =
+          mkEnableOption "direnv integration with nix-direnv"
+          // {
+            default = true;
+            example = false;
+          };
         package = mkPackageOption pkgs "nix-direnv" {};
       };
       zsh.enable = mkEnableOption "direnv integration with zsh";
