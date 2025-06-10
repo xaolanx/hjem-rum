@@ -148,7 +148,7 @@
     <details class="toc-category">
       <summary title="rum.programs">
         <span>rum.programs</span>
-        <span class="toc-count">117</span>
+        <span class="toc-count">122</span>
       </summary>
       <ul>
         
@@ -1013,6 +1013,46 @@
         <li>
           <a href="#option-rum-programs-vscode-settings" title="rum.programs.vscode.settings">
             vscode.settings
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-zoxide-enable" title="rum.programs.zoxide.enable">
+            zoxide.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-zoxide-flags" title="rum.programs.zoxide.flags">
+            zoxide.flags
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-zoxide-integrations-fish-enable" title="rum.programs.zoxide.integrations.fish.enable">
+            zoxide.integrations.fish.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-zoxide-integrations-zsh-enable" title="rum.programs.zoxide.integrations.zsh.enable">
+            zoxide.integrations.zsh.enable
+            
+            
+          </a>
+        </li>
+        
+        <li>
+          <a href="#option-rum-programs-zoxide-package" title="rum.programs.zoxide.package">
+            zoxide.package
             
             
           </a>
@@ -3137,6 +3177,73 @@ for more information.</p>
   "workbench.colorTheme" = "Catppuccin Mocha";
 }</code></pre></div>
   <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/vscode.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/vscode.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-zoxide-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-zoxide-enable" class="option-anchor">rum.programs.zoxide.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable zoxide.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/zoxide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/zoxide.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-zoxide-flags">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-zoxide-flags" class="option-anchor">rum.programs.zoxide.flags</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>list of string</code></div>
+  <div class="option-description"><p>Command-line flags passed to <code>zoxide init</code>.
+Please reference <a href="https://github.com/ajeetdsouza/zoxide#flags">zoxide's documentation</a> for configuration options.</p>
+</div>
+  <div class="option-default">Default: <code>[ ]</code></div>
+  <div class="option-example">Example: <pre><code>[
+  "--cmd cd"
+]</code></pre></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/zoxide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/zoxide.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-zoxide-integrations-fish-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-zoxide-integrations-fish-enable" class="option-anchor">rum.programs.zoxide.integrations.fish.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable zoxide integration with fish.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/zoxide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/zoxide.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-zoxide-integrations-zsh-enable">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-zoxide-integrations-zsh-enable" class="option-anchor">rum.programs.zoxide.integrations.zsh.enable</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>boolean</code></div>
+  <div class="option-description"><p>Whether to enable zoxide integration with zsh.</p>
+</div>
+  <div class="option-default">Default: <code>false</code></div>
+  <div class="option-example">Example: <code>true</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/zoxide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/zoxide.nix&gt;</a></code></div>
+</div>
+<div class="option" id="option-rum-programs-zoxide-package">
+  <h3 class="option-name">
+    <a href="#option-rum-programs-zoxide-package" class="option-anchor">rum.programs.zoxide.package</a>
+    <span class="copy-link" title="Copy link to this option"></span>
+    <span class="copy-feedback">Link copied!</span>
+  </h3>
+  <div class="option-type">Type: <code>package</code></div>
+  <div class="option-description"><p>The zoxide package to use.</p>
+</div>
+  <div class="option-default">Default: <code>pkgs.zoxide</code></div>
+  <div class="option-declared">Declared in: <code><a href="https://github.com/snugnug/hjem-rum/blob/main/modules/collection/programs/zoxide.nix" target="_blank">&lt;hjem-rum/modules/collection/programs/zoxide.nix&gt;</a></code></div>
 </div>
 <div class="option" id="option-rum-programs-zsh-enable">
   <h3 class="option-name">
