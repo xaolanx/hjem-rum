@@ -14,7 +14,7 @@ in {
   options.rum.programs.git = {
     enable = mkEnableOption "git";
 
-    package = mkPackageOption pkgs "git" {};
+    package = mkPackageOption pkgs "git" {nullable = true;};
 
     settings = mkOption {
       type = gitIni.type;
@@ -53,7 +53,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.${cfg.destination}.source = mkIf (cfg.settings != {}) (
       gitIni.generate ".gitconfig" cfg.settings
     );

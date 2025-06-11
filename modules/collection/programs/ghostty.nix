@@ -33,6 +33,7 @@ in {
     enable = mkEnableOption "Ghostty";
 
     package = mkPackageOption pkgs "ghostty" {
+      nullable = true;
       extraDescription = ''
         You can use an override to configure some settings baked into the package.
       '';
@@ -104,7 +105,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files =
       {
         ".config/ghostty/config".source = mkIf (cfg.settings != {}) (

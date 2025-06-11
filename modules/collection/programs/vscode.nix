@@ -14,7 +14,7 @@ in {
   options.rum.programs.vscode = {
     enable = mkEnableOption "Visual Studio Code";
 
-    package = mkPackageOption pkgs "vscode" {};
+    package = mkPackageOption pkgs "vscode" {nullable = true;};
 
     settings = mkOption {
       type = json.type;
@@ -38,7 +38,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files = {
       ".config/Code/User/settings.json".source = mkIf (cfg.settings != {}) (
         json.generate "settings.json" cfg.settings

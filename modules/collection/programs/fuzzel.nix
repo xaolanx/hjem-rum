@@ -14,7 +14,7 @@ in {
   options.rum.programs.fuzzel = {
     enable = mkEnableOption "fuzzel";
 
-    package = mkPackageOption pkgs "fuzzel" {};
+    package = mkPackageOption pkgs "fuzzel" {nullable = true;};
 
     settings = mkOption {
       type = ini.type;
@@ -35,7 +35,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/fuzzel/fuzzel.ini".source = mkIf (cfg.settings != {}) (
       ini.generate "fuzzel.ini" cfg.settings
     );

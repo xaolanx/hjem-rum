@@ -25,7 +25,7 @@ in {
   options.rum.programs.helix = {
     enable = mkEnableOption "Helix";
 
-    package = mkPackageOption pkgs "helix" {};
+    package = mkPackageOption pkgs "helix" {nullable = true;};
 
     settings = mkOption {
       type = toml.type;
@@ -87,7 +87,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files =
       {
         ".config/helix/config.toml".source = mkIf (cfg.settings != {}) (

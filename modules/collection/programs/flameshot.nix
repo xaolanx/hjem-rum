@@ -14,7 +14,7 @@ in {
   options.rum.programs.flameshot = {
     enable = mkEnableOption "flameshot";
 
-    package = mkPackageOption pkgs "flameshot" {};
+    package = mkPackageOption pkgs "flameshot" {nullable = true;};
 
     settings = mkOption {
       type = ini.type;
@@ -37,7 +37,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/flameshot/flameshot.ini".source = mkIf (cfg.settings != {}) (
       ini.generate "flameshot.ini" cfg.settings
     );

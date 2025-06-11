@@ -13,6 +13,7 @@ in {
     enable = mkEnableOption "OBS Studio";
 
     package = mkPackageOption pkgs "obs-studio" {
+      nullable = true;
       extraDescription = ''
         You can override the package to install plugins.
       '';
@@ -31,6 +32,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
   };
 }

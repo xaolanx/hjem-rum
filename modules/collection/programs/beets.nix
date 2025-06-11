@@ -15,6 +15,7 @@ in {
     enable = mkEnableOption "beets";
 
     package = mkPackageOption pkgs "beets" {
+      nullable = true;
       extraDescription = ''
         To get plugins to work, you will need to override the beets derivation
         with the plugins you want. Consult the [beets derivation] for a list of
@@ -67,7 +68,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/beets/config.yaml".source = mkIf (cfg.settings != {}) (
       yaml.generate "config.yaml" cfg.settings
     );

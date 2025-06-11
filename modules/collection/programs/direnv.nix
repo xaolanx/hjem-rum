@@ -16,7 +16,7 @@ in {
   options.rum.programs.direnv = {
     enable = mkEnableOption "direnv";
 
-    package = mkPackageOption pkgs "direnv" {};
+    package = mkPackageOption pkgs "direnv" {nullable = true;};
 
     settings = mkOption {
       type = toml.type;
@@ -70,7 +70,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files = {
       ".config/direnv/direnv.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "direnv-config.toml" cfg.settings

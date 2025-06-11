@@ -15,7 +15,7 @@ in {
   options.rum.programs.tofi = {
     enable = mkEnableOption "tofi";
 
-    package = mkPackageOption pkgs "tofi" {};
+    package = mkPackageOption pkgs "tofi" {nullable = true;};
 
     settings = mkOption {
       type = tofiSettingsType;
@@ -37,7 +37,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/tofi/config".text = mkIf (cfg.settings != {}) (toKeyValue cfg.settings);
   };
 }

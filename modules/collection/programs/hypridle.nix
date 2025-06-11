@@ -15,7 +15,7 @@ in {
   options.rum.programs.hypridle = {
     enable = mkEnableOption "hypridle";
 
-    package = mkPackageOption pkgs "hypridle" {};
+    package = mkPackageOption pkgs "hypridle" {nullable = true;};
 
     settings = mkOption {
       type = hyprType;
@@ -49,7 +49,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/hypr/hypridle.conf".text = mkIf (cfg.settings != {}) (toHyprconf {
       attrs = cfg.settings;
     });

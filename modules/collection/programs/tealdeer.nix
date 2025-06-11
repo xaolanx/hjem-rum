@@ -14,7 +14,7 @@ in {
   options.rum.programs.tealdeer = {
     enable = mkEnableOption "tealdeer";
 
-    package = mkPackageOption pkgs "tealdeer" {};
+    package = mkPackageOption pkgs "tealdeer" {nullable = true;};
 
     settings = mkOption {
       type = toml.type;
@@ -34,7 +34,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/tealdeer/config.toml".source = mkIf (cfg.settings != {}) (
       toml.generate "tealdeer-config.toml" cfg.settings
     );

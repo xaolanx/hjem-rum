@@ -9,7 +9,7 @@
   inherit (lib.modules) mkIf;
   inherit (lib.types) either str path oneOf attrsOf nullOr;
   inherit (lib.attrsets) mapAttrs' nameValuePair isDerivation filterAttrs attrValues;
-  inherit (lib.lists) any filter;
+  inherit (lib.lists) any filter optionals;
   inherit (lib.trivial) pathExists;
 
   cfg = config.rum.programs.fish;
@@ -43,7 +43,7 @@ in {
   options.rum.programs.fish = {
     enable = mkEnableOption "fish";
 
-    package = mkPackageOption pkgs "fish" {};
+    package = mkPackageOption pkgs "fish" {nullable = true;};
 
     config = mkOption {
       default = null;
@@ -162,7 +162,7 @@ in {
 
   config = mkIf cfg.enable {
     packages =
-      [cfg.package]
+      (optionals (cfg.package != null) [cfg.package])
       ++ (filter (pl: isVendored pl) (attrValues cfg.plugins));
 
     rum.programs.fish = {

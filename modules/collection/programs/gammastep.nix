@@ -14,7 +14,7 @@ in {
   options.rum.programs.gammastep = {
     enable = mkEnableOption "gammastep";
 
-    package = mkPackageOption pkgs "gammastep" {};
+    package = mkPackageOption pkgs "gammastep" {nullable = true;};
 
     settings = mkOption {
       type = ini.type;
@@ -40,7 +40,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/gammastep/config.ini".source = mkIf (cfg.settings != {}) (
       ini.generate "gammastep-config.ini" cfg.settings
     );

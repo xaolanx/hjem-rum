@@ -16,6 +16,7 @@ in {
     enable = mkEnableOption "spotify_player";
 
     package = mkPackageOption pkgs "spotify-player" {
+      nullable = true;
       extraDescription = ''
         You can use an override to configure certain settings
         baked into the package.
@@ -140,7 +141,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files = {
       ".config/spotify-player/app.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "spotify-player/app.toml" cfg.settings

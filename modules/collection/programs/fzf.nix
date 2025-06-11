@@ -13,7 +13,7 @@ in {
   options.rum.programs.fzf = {
     enable = mkEnableOption "fzf";
 
-    package = mkPackageOption pkgs "fzf" {};
+    package = mkPackageOption pkgs "fzf" {nullable = true;};
 
     integrations = {
       fish.enable = mkEnableOption "fzf integration with fish";
@@ -22,7 +22,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
 
     rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
       mkAfter "${getExe cfg.package} --fish | source"
