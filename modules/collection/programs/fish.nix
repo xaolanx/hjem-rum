@@ -106,10 +106,7 @@ in {
         [fish documentation]: https://fishshell.com/docs/current/language.html#configuration-files
       '';
       example = {
-        my-aliases = ''
-          alias la "ls -la"
-          alias ll "ls -l"
-        '';
+        set-path = "fish_add_path ~/.local/bin";
       };
     };
 
@@ -118,6 +115,14 @@ in {
       type = attrsOf str;
       description = ''
         A set of fish abbreviations, they will be set up with the `abbr --add` fish builtin.
+      '';
+    };
+
+    aliases = mkOption {
+      default = {};
+      type = attrsOf str;
+      description = ''
+        A set of fish aliases, they will be set up with the `alias` fish builtin.
       '';
     };
 
@@ -205,6 +210,9 @@ in {
         '';
         ".config/fish/conf.d/rum-abbreviations.fish".text = mkIf (cfg.abbrs != {}) ''
           ${concatMapAttrsStringSep "\n" (name: value: "abbr --add -- ${name} ${escapeShellArg (toString value)}") cfg.abbrs}
+        '';
+        ".config/fish/conf.d/rum-aliases.fish".text = mkIf (cfg.aliases != {}) ''
+          ${concatMapAttrsStringSep "\n" (name: value: "alias -- ${name} ${escapeShellArg (toString value)}") cfg.aliases}
         '';
       }
       // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
