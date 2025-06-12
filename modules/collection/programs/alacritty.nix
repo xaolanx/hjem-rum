@@ -14,7 +14,7 @@ in {
   options.rum.programs.alacritty = {
     enable = mkEnableOption "Alacritty";
 
-    package = mkPackageOption pkgs "alacritty" {};
+    package = mkPackageOption pkgs "alacritty" {nullable = true;};
 
     settings = mkOption {
       type = toml.type;
@@ -44,7 +44,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/alacritty/alacritty.toml".source = mkIf (cfg.settings != {}) (
       toml.generate "alacritty.toml" cfg.settings
     );

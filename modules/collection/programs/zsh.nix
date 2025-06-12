@@ -49,7 +49,7 @@ in {
   ];
   options.rum.programs.zsh = {
     enable = mkEnableOption "zsh";
-    package = mkPackageOption pkgs "zsh" {};
+    package = mkPackageOption pkgs "zsh" {nullable = true;};
     plugins = mkOption {
       type = attrsOf (submodule {
         options = {
@@ -82,7 +82,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files = let
       check = {
         environment = config.environment.sessionVariables != {};

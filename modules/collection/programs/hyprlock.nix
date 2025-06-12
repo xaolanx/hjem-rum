@@ -15,7 +15,7 @@ in {
   options.rum.programs.hyprlock = {
     enable = mkEnableOption "hyprlock";
 
-    package = mkPackageOption pkgs "hyprlock" {};
+    package = mkPackageOption pkgs "hyprlock" {nullable = true;};
 
     settings = mkOption {
       type = hyprType;
@@ -45,7 +45,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/hypr/hyprlock.conf".text = mkIf (cfg.settings != {}) (toHyprconf {
       attrs = cfg.settings;
     });

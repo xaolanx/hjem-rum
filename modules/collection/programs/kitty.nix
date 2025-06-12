@@ -20,7 +20,7 @@ in {
   options.rum.programs.kitty = {
     enable = mkEnableOption "kitty";
 
-    package = mkPackageOption pkgs "kitty" {};
+    package = mkPackageOption pkgs "kitty" {nullable = true;};
 
     settings = mkOption {
       type = kittyKeyValue.type;
@@ -85,7 +85,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files = {
       ".config/kitty/kitty.conf".source = mkIf (cfg.settings != {}) (
         kittyKeyValue.generate "kitty.conf" (

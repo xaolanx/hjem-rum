@@ -15,7 +15,7 @@
 in {
   options.rum.programs.starship = {
     enable = mkEnableOption "starship module.";
-    package = mkPackageOption pkgs "starship" {};
+    package = mkPackageOption pkgs "starship" {nullable = true;};
     settings = mkOption {
       type = toml.type;
       default = {};
@@ -54,7 +54,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files = {
       ".config/starship.toml".source = mkIf (cfg.settings != {}) (
         toml.generate "starship.toml" cfg.settings

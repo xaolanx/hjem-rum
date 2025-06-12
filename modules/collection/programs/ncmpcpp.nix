@@ -17,6 +17,7 @@ in {
     enable = mkEnableOption "ncmpcpp, a mpd-based music player.";
 
     package = mkPackageOption pkgs "ncmpcpp" {
+      nullable = true;
       extraDescription = ''
         You can override the package to customize certain settings that are baked into the package.
       '';
@@ -89,7 +90,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files = {
       ".config/ncmpcpp/config".text = mkIf (cfg.settings != {}) (toNcmpcppSettings cfg.settings);
       ".config/ncmpcpp/bindings".text = mkIf (cfg.bindings != {}) (toNcmpcppBinding cfg.bindings);

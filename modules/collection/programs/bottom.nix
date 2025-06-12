@@ -14,7 +14,7 @@ in {
   options.rum.programs.bottom = {
     enable = mkEnableOption "bottom";
 
-    package = mkPackageOption pkgs "bottom" {};
+    package = mkPackageOption pkgs "bottom" {nullable = true;};
 
     settings = mkOption {
       type = toml.type;
@@ -39,7 +39,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/bottom/bottom.toml".source = mkIf (cfg.settings != {}) (
       toml.generate "bottom.toml" cfg.settings
     );

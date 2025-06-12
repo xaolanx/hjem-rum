@@ -14,7 +14,7 @@ in {
   options.rum.programs.lsd = {
     enable = mkEnableOption "LSD (LSDeluxe)";
 
-    package = mkPackageOption pkgs "lsd" {};
+    package = mkPackageOption pkgs "lsd" {nullable = true;};
 
     settings = mkOption {
       type = yaml.type;
@@ -72,7 +72,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != null) [cfg.package];
     files.".config/lsd/config.yaml".source = mkIf (cfg.settings != {}) (
       yaml.generate "config.yaml" cfg.settings
     );

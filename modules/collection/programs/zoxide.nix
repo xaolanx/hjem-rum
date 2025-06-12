@@ -17,7 +17,7 @@ in {
   options.rum.programs.zoxide = {
     enable = mkEnableOption "zoxide";
 
-    package = mkPackageOption pkgs "zoxide" {};
+    package = mkPackageOption pkgs "zoxide" {nullable = true;};
 
     flags = mkOption {
       type = listOf str;
@@ -40,7 +40,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    packages = [cfg.package];
+    packages = mkIf (cfg.package != true) [cfg.package];
     files = {
       /*
       Needs to be added to the end of the shell configuration files, hence the `mkIf` and `mkAfter`.
