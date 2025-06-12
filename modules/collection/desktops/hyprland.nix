@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib.attrsets) mapAttrsToList;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) mkIf mkRenamedOptionModule;
   inherit (lib.options) mkEnableOption mkOption;
   inherit (lib.strings) optionalString;
   inherit (lib.types) either lines listOf package path str;
@@ -16,9 +16,11 @@
   inherit (rumLib.generators.hypr) toHyprconf pluginsToHyprconf;
   inherit (rumLib.types) hyprType;
 
-  cfg = config.rum.programs.hyprland;
+  cfg = config.rum.desktops.hyprland;
 in {
-  options.rum.programs.hyprland = {
+  imports = [(mkRenamedOptionModule ["rum" "programs" "hyprland"] ["rum" "desktops" "hyprland"])];
+
+  options.rum.desktops.hyprland = {
     enable = mkEnableOption "Hyprland";
 
     settings = mkOption {
