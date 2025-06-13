@@ -17,6 +17,9 @@
         abbrs = {
           foo = "bar";
         };
+        aliases = {
+          ping = "ping -c 5";
+        };
       };
     };
   };
@@ -37,6 +40,9 @@
       with subtest("Validate abbreviations"):
           machine.succeed("su bob -c 'fish -c \"abbr --query foo\" '")
           machine.fail("su bob -c 'fish -c \"abbr --query missing\" '")
+
+      with subtest("Validate aliases"):
+          machine.succeed("su bob -c 'fish -c \"alias | grep ping\" '")
 
       with subtest("Loading of environment variables"):
           machine.succeed("su bob -c \"fish -c 'set -q RUM_TEST'\"")
