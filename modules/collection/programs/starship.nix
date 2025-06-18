@@ -58,8 +58,8 @@ in {
     );
 
     rum.programs = {
-      fish.config = mkIf cfg.integrations.nushell.enable (
-        mkAfter "starship init fish | source" + (optionalString cfg.transience.enable) "\nenable_transience"
+      fish.config = mkIf cfg.integrations.fish.enable (
+        mkAfter ("starship init fish | source" + (optionalString cfg.transience.enable "\nenable_transience"))
       );
 
       nushell.extraConfig = mkIf cfg.integrations.nushell.enable (
