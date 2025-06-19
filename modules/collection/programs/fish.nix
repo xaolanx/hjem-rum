@@ -198,7 +198,7 @@ in {
           ${concatMapAttrsStringSep "\n" (name: value: "alias -- ${name} ${escapeShellArg (toString value)}") cfg.aliases}
         '';
       }
-      // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}" {source = toFishFunc val name;}) cfg.functions)
+      // (mapAttrs' (name: val: nameValuePair ".config/fish/functions/${name}.fish" {source = toFishFunc val name;}) cfg.functions)
       // (mapAttrs' (name: val: nameValuePair ".config/fish/conf.d/${name}.fish" {source = writeFish "${name}.fish" val;}) cfg.earlyConfigFiles);
   };
 }
