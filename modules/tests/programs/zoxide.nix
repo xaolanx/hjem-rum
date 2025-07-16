@@ -7,9 +7,11 @@
         flags = ["--cmd cd"];
         integrations.fish.enable = true;
         integrations.zsh.enable = true;
+        integrations.nushell.enable = true;
       };
       programs.fish.enable = true;
       programs.zsh.enable = true;
+      programs.nushell.enable = true;
     };
   };
 
@@ -27,5 +29,9 @@
       # Assert that the zsh integration snippet is in place
       pattern = r'^eval "\$\(/nix/store/[^/]+/bin/zoxide init zsh --cmd cd\)"$'
       machine.succeed(f"grep -E '{pattern}' %s" % "/home/bob/.zshrc")
+
+      # Assert that the nushell integration snippet is in place
+      file = machine.succeed("grep -E 'source /nix/store/[^/]+zoxide-init-nu' %s | awk '{print $2}'" % "/home/bob/.config/nushell/config.nu")
+      machine.succeed(f"su bob -c 'zoxide init nushell --cmd cd > /home/bob/zoxide-init-nu && diff -u -Z -b -B /home/bob/zoxide-init-nu {file}'")
     '';
 }

@@ -36,6 +36,7 @@ in {
     integrations = {
       fish.enable = mkEnableOption "zoxide integration with fish";
       zsh.enable = mkEnableOption "zoxide integration with zsh";
+      nushell.enable = mkEnableOption "zoxide integration with nushell";
     };
   };
 
@@ -51,6 +52,13 @@ in {
       );
       ".zshrc".text = mkIf (config.rum.programs.zsh.enable && cfg.integrations.zsh.enable) (
         mkAfter ''eval "$(${getExe cfg.package} init zsh ${toFlags})"''
+      );
+      ".config/nushell/config.nu".text = mkIf (config.rum.programs.nushell.enable && cfg.integrations.nushell.enable) (
+        mkAfter ''
+          source ${
+            pkgs.runCommand "zoxide-init-nu" {} ''${getExe cfg.package} init nushell ${toFlags} >> "$out"''
+          }
+        ''
       );
     };
   };
