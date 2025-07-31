@@ -127,6 +127,51 @@ hjem.users.<username>.rum.programs.alacritty = {
 > [!TIP]
 > Consult the [documentation] for an overview of all available options.
 
+### Optional: Manual Module Importing
+
+> [!WARNING]
+> Manual module importing is an advanced user feature and is not recommended for
+> the average user. While it is supported and tested for, you may encounter more
+> problems with it, and we advise users to become more familiar with the NixOS
+> module system and Hjem Rum in particular before attempting to leave behind the
+> automatic importing of all modules. Please skip ahead to [Environmental
+> Variables] if you are not interested in this. While the default hjemModule
+> imports all modules in the collection recursively, we have implemented
+> functionality to support users who would prefer to only import modules that
+> they plan to use. If you would like to do so, rather than importing the
+> default hjemModule we provide, you will have to use the special `bare` module:
+
+```nix
+hjem.extraModules = [
+    inputs.hjem-rum.hjemModules.bare # The alternative module
+    # inputs.hjem-rum.hjemModules.default
+];
+```
+
+This alternative module does not import any of our modules, which means that you
+will not be able to do anything with Hjem Rum without manually importing our
+modules yourself. To this end, we offer a `modulesPath` output for you to import
+modules from.
+
+```nix
+hjem.extraModules = [
+    # Notice the similarity to the programs.alacritty namespace
+    "${inputs.hjem-rum.modulesPath}/programs/alacritty.nix" # Importing the alacritty module
+];
+```
+
+We strongly recommend importing `environment/warning.nix`
+when setting up Hjem Rum, as it offers useful checking and a warning if your
+session variables are not actually being used.
+
+```nix
+hjem.extraModules = [
+    "${modulesPath}/environment/warning.nix"
+];
+```
+
+See more information below.
+
 ## Environmental Variables
 
 Hjem provides attribute set "environment.sessionVariables" that allows the user
