@@ -70,7 +70,18 @@ in {
     };
   };
 
-  config =
+  config = let
+    fishIntegration = optionalAttrs (config.rum.programs.fish.enable or false) {
+      fish.config = mkIf cfg.integrations.fish.enable (
+        mkAfter "${getExe cfg.package} hook fish | source"
+      );
+    };
+    zshIntegration = optionalAttrs (config.rum.programs.zsh.enable or false) {
+      zsh.initConfig = mkIf cfg.integrations.zsh.enable (
+        mkAfter "eval \"$(${getExe cfg.package} hook zsh)\""
+      );
+    };
+  in
     mkIf cfg.enable {
       packages = mkIf (cfg.package != null) [cfg.package];
       files = {
@@ -80,15 +91,6 @@ in {
         ".config/direnv/direnvrc".text = mkIf (cfg.direnvrc != "") cfg.direnvrc;
         ".config/direnv/lib/nix-direnv.sh".source = mkIf cfg.integrations.nix-direnv.enable "${cfg.integrations.nix-direnv.package}/share/nix-direnv/direnvrc";
       };
-    }
-    // optionalAttrs (config.rum.programs.fish.enable or false) {
-      rum.programs.fish.config = mkIf cfg.integrations.fish.enable (
-        mkAfter "${getExe cfg.package} hook fish | source"
-      );
-    }
-    // optionalAttrs (config.rum.programs.zsh.enable or false) {
-      rum.programs.zsh.initConfig = mkIf cfg.integrations.zsh.enable (
-        mkAfter "eval \"$(${getExe cfg.package} hook zsh)\""
-      );
+      rum.programs = fishIntegration // zshIntegration;
     };
 }
