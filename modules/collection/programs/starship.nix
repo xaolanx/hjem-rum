@@ -4,6 +4,7 @@
   config,
   ...
 }: let
+  inherit (lib.attrsets) optionalAttrs;
   inherit (lib.meta) getExe;
   inherit (lib.modules) mkAfter mkIf;
   inherit (lib.options) mkEnableOption mkOption mkPackageOption;
@@ -51,17 +52,21 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    packages = mkIf (cfg.package != null) [cfg.package];
-    files.".config/starship.toml".source = mkIf (cfg.settings != {}) (
-      toml.generate "starship.toml" cfg.settings
-    );
-
-    rum.programs = {
-      fish.config = mkIf cfg.integrations.fish.enable (
-        mkAfter ("starship init fish | source" + (optionalString cfg.transience.enable "\nenable_transience"))
+  config =
+    mkIf cfg.enable {
+      packages = mkIf (cfg.package != null) [cfg.package];
+      files.".config/starship.toml".source = mkIf (cfg.settings != {}) (
+        toml.generate "starship.toml" cfg.settings
       );
-
+    }
+    // optionalAttrs (config.rum.programs.fish.enable or false) {
+      rum.programs = {
+        fish.config = mkIf cfg.integrations.fish.enable (
+          mkAfter ("starship init fish | source" + (optionalString cfg.transience.enable "\nenable_transience"))
+        );
+      };
+    }
+    // optionalAttrs (config.rum.programs.nushell.enable or false) {
       nushell.extraConfig = mkIf cfg.integrations.nushell.enable (
         mkAfter ''
           use ${
@@ -71,10 +76,10 @@ in {
           }
         ''
       );
-
+    }
+    // optionalAttrs (config.rum.programs.zsh.enable or false) {
       zsh.initConfig = mkIf cfg.integrations.zsh.enable (
         mkAfter ''eval "$(${getExe cfg.package} init zsh)"''
       );
     };
-  };
 }
