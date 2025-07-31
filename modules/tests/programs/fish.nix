@@ -19,9 +19,9 @@
           abbrs = {
             foo = "bar";
           };
-        };
-        aliases = {
-          ping = "ping -c 5";
+          aliases = {
+            ping = "ping -c 5";
+          };
         };
       };
     };
